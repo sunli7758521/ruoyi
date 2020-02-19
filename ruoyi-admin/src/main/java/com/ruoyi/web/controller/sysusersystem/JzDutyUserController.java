@@ -94,20 +94,23 @@ public class JzDutyUserController extends BaseController
     /**
      * 新增值班关联用户
      */
-    @GetMapping("/add/{planId}")
-    public String add(@PathVariable("planId") Long planId, ModelMap mmap)
+    @GetMapping("/add")
+//    public String add(@PathVariable("planId") Long planId, ModelMap mmap)
+//    {
+//        JzPlan jzPlan = jzPlanService.selectJzPlanById(planId);
+//        mmap.put("jzPlan", jzPlan);
+//        return prefix + "/add";
+//    }
+    public String add()
     {
-        JzPlan jzPlan = jzPlanService.selectJzPlanById(planId);
-        mmap.put("jzPlan", jzPlan);
         return prefix + "/add";
     }
-
     /**
      * 新增保存值班关联用户
      */
     @RequiresPermissions("sysusersystem:user:add")
     @Log(title = "值班关联用户", businessType = BusinessType.INSERT)
-    @PostMapping("/adda")
+    @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(JzDutyUser jzDutyUser)
     {
@@ -133,15 +136,22 @@ public class JzDutyUserController extends BaseController
      */
     @RequiresPermissions("sysusersystem:user:edit")
     @Log(title = "值班关联用户", businessType = BusinessType.UPDATE)
-    @PostMapping("/edit/{planId}")
+//    @PostMapping("/edit/{planId}")
+//    @ResponseBody
+//    public AjaxResult editSave(@PathVariable long planId,JzDutyUser jzDutyUser)
+//    {
+//        jzDutyUser.setPlanId(planId);
+//        jzDutyUser.setCreateTime(DateUtils.getNowDate());
+//        return toAjax(jzDutyUserService.updateJzDutyUser(jzDutyUser));
+//    }
+    @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(@PathVariable long planId,JzDutyUser jzDutyUser)
+    public AjaxResult editSave(JzDutyUser jzDutyUser)
     {
-        jzDutyUser.setPlanId(planId);
+//        jzDutyUser.setPlanId(planId);
         jzDutyUser.setCreateTime(DateUtils.getNowDate());
         return toAjax(jzDutyUserService.updateJzDutyUser(jzDutyUser));
     }
-
     /**
      * 删除值班关联用户
      */

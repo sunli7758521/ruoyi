@@ -115,6 +115,16 @@ public class SysRoleServiceImpl implements ISysRoleService
     }
 
     /**
+     * 角色下拉框
+     * @return
+     */
+
+    @Override
+    public List<SysRole> selectRoleLists() {
+        return roleMapper.selectRoleLists();
+    }
+
+    /**
      * 通过角色ID查询角色
      * 
      * @param roleId 角色ID

@@ -2,70 +2,144 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
     <th:block th:include="include :: header('修改值班关联用户')" />
+    <th:block th:include="include :: datetimepicker-css" />
 </head>
 <body class="white-bg">
-    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-user-edit" th:object="${jzDutyUser}">
-            <input name="dutyUserId" th:field="*{dutyUserId}" type="hidden">
-            <input id="planId" name="planId" th:field="*{planId}" class="form-control" type="hidden" readonly>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">用户：</label>
-                <div class="col-sm-8">
-<!--                    <input name="userId" th:field="*{userId}" class="form-control" type="text">-->
-                    <select id="jcPeople" class="form-control" name="userId" th:with="type=${@dict.uList()}" th:field="*{userId}">
-                        <option value="">所有</option>
-                        <option th:each="dict : ${type}" th:text="${dict.userName}" th:value="${dict.userId}"></option>
-                    </select>
-                </div>
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-user-edit" th:object="${jzDutyUser}">
+        <input name="dutyUserId" th:field="*{dutyUserId}" type="hidden">
+        <input id="planId" name="planId" th:field="*{planId}" class="form-control" type="hidden" readonly>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">用户：</label>
+            <div class="col-sm-8">
+                <!--                    <input name="userId" th:field="*{userId}" class="form-control" type="text">-->
+                <select id="jcPeople" class="form-control" name="userId" th:with="type=${@dict.uList()}" th:field="*{userId}">
+                    <option value="">所有</option>
+                    <option th:each="dict : ${type}" th:text="${dict.userName}" th:value="${dict.userId}"></option>
+                </select>
             </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">计划名称：</label>
-                <div class="col-sm-8">
-                    <input name="planId" th:field="*{planName}" class="form-control" type="text" readonly>
-                </div>
+        </div>
+<!--        <div class="form-group">-->
+<!--            <label class="col-sm-3 control-label">计划名称：</label>-->
+<!--            <div class="col-sm-8">-->
+<!--                <input name="planId" th:field="*{planName}" class="form-control" type="text"  autocomplete="off" readonly>-->
+<!--            </div>-->
+<!--        </div>-->
+        <div class="form-group">
+            <label class="col-sm-3 control-label">值班开始时间：</label>
+            <div class="col-sm-8">
+                <!--                    <div class="input-group date">-->
+                <!--                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>-->
+                <!--                        <input name="beginZBTime" th:value="${#dates.format(jzDutyUser.beginZBTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">-->
+                <input type="text" name="beginZBTime" class="layui-timeline form-control" th:value="${#dates.format(jzDutyUser.beginZBTime, 'yyyy-MM-dd HH:mm:ss')}"   id="test5" placeholder="yyyy-MM-dd HH:mm:ss"  autocomplete="off">
+                <!--                    </div>-->
             </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">值班人员类型:</label>
-                <div class="col-sm-8">
-                    <!--                    <input name="userId" class="form-control" type="text">-->
-                    <select id="type" class="form-control" name="type" th:with="type=${@dict.getType('jz_zb_type')}">
-                        <option value="">所有</option>
-                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                    </select>
-                </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">值班结束时间：</label>
+            <div class="col-sm-8">
+                <!--                    <div class="input-group date">-->
+                <!--                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>-->
+                <input type="text" name="endZBTime" class="layui-timeline form-control" th:value="${#dates.format(jzDutyUser.endZBTime, 'yyyy-MM-dd HH:mm:ss')}"   id="test6" placeholder="yyyy-MM-dd HH:mm:ss" autocomplete="off">
+                <!--                        <input name="endZBTime" th:value="${#dates.format(jzDutyUser.endZBTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">-->
+                <!--                    </div>-->
             </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">状态:</label>
-                <div class="col-sm-8">
-                    <!--                    <input name="userId" class="form-control" type="text">-->
-                    <select id="state" class="form-control" name="state" th:with="type=${@dict.getType('jz_duty_user_state')}">
-                        <option value="">所有</option>
-                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">备注：</label>
-                <div class="col-sm-8">
-                    <textarea name="remark" class="form-control" type="text"></textarea>
-                </div>
-            </div>
-        </form>
-    </div>
-    <th:block th:include="include :: footer" />
-    <script type="text/javascript">
-        var prefix = ctx + "sysusersystem/user";
-        $("#form-user-edit").validate({
-            focusCleanup: true
-        });
+        </div>
 
-        function submitHandler() {
-            var planId = $('#planId').val();
-            alert(planId)
-            if ($.validate.form()) {
-                $.operate.save(prefix + "/edit/"+planId, $('#form-user-edit').serialize());
-            }
+        <div class="form-group">
+            <label class="col-sm-3 control-label">值班日期：</label>
+            <div class="col-sm-8">
+                <!--                    <div class="input-group date">  &lt;!&ndash;th:value="${#dates.format(jzDutyUser.zbTime, 'yyyy-MM-dd')}"&ndash;&gt;-->
+                <!--                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>-->
+                <input name="zbTime"  class="form-control" th:field="*{zbTime}"  type="text"   autocomplete="off">
+                <!--                    </div>-->
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">值班人员类型:</label>
+            <div class="col-sm-8">
+                <!--                    <input name="userId" class="form-control" type="text">-->
+                <!--                    <select id="type" class="form-control" name="type" th:with="type=${@dict.getType('jz_zb_type')}">-->
+                <!--                        <option value="">所有</option>-->
+                <!--                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>-->
+                <!--                    </select>-->
+                <select id="type" class="form-control" name="type" th:with="type=${@dict.selectRoleLists()}">
+                    <option value="">所有</option>
+                    <option th:each="dict : ${type}" th:text="${dict.roleName}" th:value="${dict.roleId}"  th:field="*{type}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">状态:</label>
+            <div class="col-sm-8">
+                <!--                    <input name="userId" class="form-control" type="text">-->
+                <select id="state" class="form-control" name="state" th:with="type=${@dict.getType('jz_duty_user_state')}">
+                    <option value="">所有</option>
+                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{state}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">备注：</label>
+            <div class="col-sm-8">
+                <textarea name="remark" class="form-control" type="text"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+<th:block th:include="include :: footer" />
+<th:block th:include="include :: datetimepicker-js" />
+<script th:src="@{/layui/layui.js}"></script>
+<script>
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+        //日期时间选择器
+        laydate.render({
+            elem: '#test5'
+            ,type: 'datetime'
+        });
+    });
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+        //日期时间选择器
+        laydate.render({
+            elem: '#test6'
+            ,type: 'datetime'
+        });
+    });
+</script>
+<script type="text/javascript">
+    var prefix = ctx + "sysusersystem/user";
+    $("#form-user-edit").validate({
+        focusCleanup: true
+    });
+
+    function submitHandler() {
+        var planId = $('#planId').val();
+        // alert(planId)
+        if ($.validate.form()) {
+            // $.operate.save(prefix + "/edit/"+planId, $('#form-user-edit').serialize());
+            $.operate.save(prefix + "/edit", $('#form-user-edit').serialize());
         }
-    </script>
+    }
+    $("input[name='beginZBTime']").datetimepicker({
+        format: "yyyy-mm-dd",
+        minView: "month",
+        autoclose: true
+    });
+
+    $("input[name='endZBTime']").datetimepicker({
+        format: "yyyy-mm-dd",
+        minView: "month",
+        autoclose: true
+    });
+
+    $("input[name='zbTime']").datetimepicker({
+        format: "yyyy-mm-dd",
+        minView: "month",
+        autoclose: true
+    });
+</script>
 </body>
 </html>

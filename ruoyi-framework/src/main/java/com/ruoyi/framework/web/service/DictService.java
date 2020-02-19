@@ -14,9 +14,11 @@ import com.ruoyi.suppliercontract.domain.JzSupplier;
 import com.ruoyi.suppliercontract.service.IJzSupplierService;
 import com.ruoyi.system.domain.SysDept;
 import com.ruoyi.system.domain.SysDictData;
+import com.ruoyi.system.domain.SysRole;
 import com.ruoyi.system.domain.SysUser;
 import com.ruoyi.system.service.ISysDeptService;
 import com.ruoyi.system.service.ISysDictDataService;
+import com.ruoyi.system.service.ISysRoleService;
 import com.ruoyi.system.service.ISysUserService;
 import com.ruoyi.systemmanagement.IJzSystemManagementService;
 import com.ruoyi.systemmanagement.domain.JzSystemManagement;
@@ -79,6 +81,9 @@ public class DictService
 
     @Autowired
     private IJzEmergencyPlanService jzEmergencyPlanService;
+
+    @Autowired
+    private ISysRoleService sysRoleService;
     /**
      * 根据stateID查询到jz_type表中 风险 应急物资 隐患
      * @param stateid 0 1 2
@@ -104,6 +109,13 @@ public class DictService
     public List<JzSupplier> supList(){
 
         return supplierService.supList();
+    }
+    /**
+     * 角色下拉框
+     * @return
+     */
+    public List<SysRole> selectRoleLists() {
+        return sysRoleService.selectRoleLists();
     }
     /**
      * 员工下拉列表

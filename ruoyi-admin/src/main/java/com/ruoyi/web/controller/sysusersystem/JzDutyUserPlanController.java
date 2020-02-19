@@ -144,6 +144,7 @@ public class JzDutyUserPlanController extends BaseController
         jzPlan = jzPlanService.selectJzPlanById(dictId);
 //        List<JzPlan> list = jzPlanService.selectJzPlanList(jzPlan);
         mmap.put("jzPlan",jzPlan);
-        return "sysusersystem/userLog/hiddenuser";
+        //return "sysusersystem/userLog/hiddenuser";
+        return "sysusersystem/user/hiddenuser";
     }
 }

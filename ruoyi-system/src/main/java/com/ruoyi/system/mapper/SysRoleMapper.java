@@ -25,7 +25,11 @@ public interface SysRoleMapper
      * @return 角色列表
      */
     public List<SysRole> selectRolesByUserId(Long userId);
-
+    /**
+     * 角色下拉框
+     * @return
+     */
+    public List<SysRole> selectRoleLists();
     /**
      * 通过角色ID查询角色
      * 
